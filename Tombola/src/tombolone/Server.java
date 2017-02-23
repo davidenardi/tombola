@@ -1,27 +1,79 @@
 package tombolone;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+
 
 public class Server {
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Display display = Display.getDefault();
-		Shell shell = new Shell();
-		shell.setSize(450, 300);
-		shell.setText("SWT Application");
-
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
+	static ServerSocket ss;
+	static Socket socketClient;
+	
+	static ArrayList<PrintWriter> clientlist=new ArrayList<PrintWriter>();
+	
+	private static class ServerThread extends Thread{
+		
+		private Socket client;
+		
+		public ServerThread(Socket socketClient) {
+			// TODO Auto-generated constructor stub
+			client = socketClient;
 		}
+
+		public void run(){
+			super.run();
+			/*
+			 * resta in attesa dei messaggi client
+			 * riceve il messaggio
+			 * manda messaggio a tutti i client
+			 */
+			try {
+				BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+				PrintWriter out = new PrintWriter(client.getOutputStream(),true);
+				
+				while(true){
+					String messaggio = in.readLine();
+					//manda il messaggio a tutti
+					for (PrintWriter printWriter : clientlist) {
+						printWriter.println(messaggio);
+					}
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+	}
+	
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		/*
+		 * server socket in ascolto
+		 * Per ogni connessione crea un socket e thread
+		 * 	aggiunge ad un vettore di client i client
+		 * ritorna in ascolta
+		 * 
+		 */
+		ss=new ServerSocket(9999);
+		while(true){
+			socketClient = ss.accept();
+			//aggiunge ad un vettore
+			PrintWriter out = new PrintWriter(socketClient.getOutputStream(),true);
+			clientlist.add(out);
+			//crea socket e passa socket
+			ServerThread st = new ServerThread(socketClient);
+			st.start();
+			//ritorna in ascolto
+		}
+		
+		
 	}
 
 }
