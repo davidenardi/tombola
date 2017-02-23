@@ -27,8 +27,13 @@ public class ClientReceiver extends Thread {
 		try {
 			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 			while(true){
-				String messaggio=in.readLine();
-				cs.addMessage(messaggio);
+				System.out.println("sono entrato");
+				for(int i = 0; i< 5 ; i++){
+					System.out.println("sono entrato nella ricezione dei messaggi ");
+					
+					System.out.println(in.readLine());
+					cs.addMessage());
+				}
 			}
 			
 		} catch (IOException e) {

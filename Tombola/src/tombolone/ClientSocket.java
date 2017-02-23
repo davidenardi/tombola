@@ -17,7 +17,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
 public class ClientSocket {
-
+	int n =0;
 	protected Shell shell;
 	private Text text_chat;
 	private Text text_invia;
@@ -61,7 +61,7 @@ public class ClientSocket {
 		shell.setText("SWT Application");
 		
 		text_chat = new Text(shell, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-
+		
 		text_chat.setBounds(10, 40, 414, 143);
 		
 		text_invia = new Text(shell, SWT.BORDER);
@@ -72,8 +72,9 @@ public class ClientSocket {
 		btnConnessione.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+				if(n == 0){
 				try {
+					n = 1;
 					client = new Socket("localhost",9999);
 					ClientReceiver cs = new ClientReceiver(ClientSocket.this,client);
 					cs.start();
@@ -84,6 +85,8 @@ public class ClientSocket {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				}
+				
 				
 			}
 		});
@@ -125,3 +128,4 @@ public class ClientSocket {
 		
 	}
 }
+

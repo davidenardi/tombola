@@ -35,8 +35,19 @@ public class Server {
 			try {
 				BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				PrintWriter out = new PrintWriter(client.getOutputStream(),true);
+				for(int i = 0; i< 5; i++){
+					//int nCasuale = (int) Math.round(Math.random() * 10) ;
+					//System.out.println("mandato: " + nCasuale);
+					out.write("ciao");
+				}
 				
-				out.print("hei");
+				while(true){
+					String messaggio = in.readLine();
+					//manda il messaggio a tutti
+					for (PrintWriter printWriter : clientlist) {
+						printWriter.println(messaggio);
+					}
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -71,3 +82,5 @@ public class Server {
 	}
 
 }
+
+
