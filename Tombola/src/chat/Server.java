@@ -1,4 +1,4 @@
-package tombolone;
+package chat;
 
 
 import java.io.BufferedReader;
@@ -36,7 +36,13 @@ public class Server {
 				BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				PrintWriter out = new PrintWriter(client.getOutputStream(),true);
 				
-				out.print("hei");
+				while(true){
+					String messaggio = in.readLine();
+					//manda il messaggio a tutti
+					for (PrintWriter printWriter : clientlist) {
+						printWriter.println(messaggio);
+					}
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
