@@ -12,7 +12,6 @@ import java.net.UnknownHostException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
 
-import tombolone.lib.SWTResourceManager;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -62,7 +61,7 @@ public class ClientSocket {
 		shell.setText("SWT Application");
 		
 		text_chat = new Text(shell, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-		text_chat.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+
 		text_chat.setBounds(10, 40, 414, 143);
 		
 		text_invia = new Text(shell, SWT.BORDER);
