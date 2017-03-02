@@ -32,7 +32,7 @@ public class ClientReceiver extends Thread {
 					System.out.println("sono entrato nella ricezione dei messaggi ");
 					
 					System.out.println(in.readLine());
-					cs.addMessage());
+					cs.addMessage("Connessione");
 				}
 			}
 			

@@ -36,8 +36,8 @@ public class Server {
 				BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				PrintWriter out = new PrintWriter(client.getOutputStream(),true);
 				for(int i = 0; i< 5; i++){
-					//int nCasuale = (int) Math.round(Math.random() * 10) ;
-					//System.out.println("mandato: " + nCasuale);
+					int nCasuale = (int) Math.round(Math.random() * 10) ;
+					System.out.println("mandato: " + nCasuale);
 					out.write("ciao");
 				}
 				
@@ -62,8 +62,8 @@ public class Server {
 		/*
 		 * server socket in ascolto
 		 * Per ogni connessione crea un socket e thread
-		 * 	aggiunge ad un vettore di client i client
-		 * ritorna in ascolta
+		 * 	aggiunge ad un vettore di client i client (Quindi in questo caso il clinet sara la scheda di gioco)
+		 * ritorna in ascolto
 		 * 
 		 */
 		ss=new ServerSocket(9999);
