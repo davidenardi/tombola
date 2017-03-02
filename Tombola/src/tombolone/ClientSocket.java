@@ -15,14 +15,15 @@ import org.eclipse.swt.widgets.Text;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ClientSocket {
 	int n =0;
-	protected Shell shell;
-	private Text text_chat;
-	private Text text_invia;
-	private Button btnInvia;
+	protected Shell shlScheda;
 	static Socket client;
+	private Table scheda;
 
 	/**
 	 * Launch the application.
@@ -43,9 +44,9 @@ public class ClientSocket {
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
+		shlScheda.open();
+		shlScheda.layout();
+		while (!shlScheda.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -56,19 +57,13 @@ public class ClientSocket {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		shell = new Shell();
-		shell.setSize(450, 300);
-		shell.setText("SWT Application");
-		
-		text_chat = new Text(shell, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-		
-		text_chat.setBounds(10, 40, 414, 143);
-		
-		text_invia = new Text(shell, SWT.BORDER);
-		text_invia.setBounds(10, 200, 204, 52);
+		shlScheda = new Shell();
+		shlScheda.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+		shlScheda.setSize(450, 276);
+		shlScheda.setText("Scheda");
 		
 		
-		Button btnConnessione = new Button(shell, SWT.NONE);
+		Button btnConnessione = new Button(shlScheda, SWT.NONE);
 		btnConnessione.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -90,27 +85,12 @@ public class ClientSocket {
 				
 			}
 		});
-		btnConnessione.setBounds(319, 213, 105, 25);
+		btnConnessione.setBounds(162, 213, 105, 25);
 		btnConnessione.setText("Connessione");
 		
-		
-		btnInvia = new Button(shell, SWT.NONE);
-		btnInvia.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					PrintWriter out = new PrintWriter(client.getOutputStream(),true);
-					String messaggio = text_invia.getText();
-					out.println(messaggio);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-		btnInvia.setBounds(220, 213, 75, 25);
-		btnInvia.setText("Invia");
+		TableViewer Scheda = new TableViewer(shlScheda, SWT.BORDER | SWT.FULL_SELECTION);
+		scheda = Scheda.getTable();
+		scheda.setBounds(0, 0, 434, 207);
 
 	}
 
@@ -121,7 +101,7 @@ public class ClientSocket {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				text_chat.append(messaggio+"\n");
+				
 			}
 			
 		});
