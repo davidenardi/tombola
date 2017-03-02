@@ -1,86 +1,64 @@
 package tombolone;
 
-
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
+import it.fabiobiscaro.socket.tombola.buddy.Cartella;
 
 public class Server {
-	static ServerSocket ss;
-	static Socket socketClient;
-	
-	static ArrayList<PrintWriter> clientlist=new ArrayList<PrintWriter>();
-	
-	private static class ServerThread extends Thread{
-		
-		private Socket client;
-		
-		public ServerThread(Socket socketClient) {
-			// TODO Auto-generated constructor stub
-			client = socketClient;
-		}
 
-		public void run(){
-			super.run();
-			/*
-			 * resta in attesa dei messaggi client
-			 * riceve il messaggio
-			 * manda messaggio a tutti i client
-			 */
-			try {
-				BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-				PrintWriter out = new PrintWriter(client.getOutputStream(),true);
-				for(int i = 0; i< 15; i++){
-					int nCasuale = (int) Math.round(Math.random() * 100) ;
-					System.out.println("mandato: " + nCasuale);
-					out.write("ciao");
-				}
-				
-				while(true){
-					String messaggio = in.readLine();
-					//manda il messaggio a tutti
-					for (PrintWriter printWriter : clientlist) {
-						printWriter.println(messaggio);
+	// 1) Alla connessione il server dà la lista dei numeri
+	// 1bis) Il gioco comincia, il server avvisa tutti (GIOCO ON)
+	// 2) Il server invia un un numero (NUMERO n)
+	// 3) Il client avvisa quando ha vinto (VINCITA quale)
+	// 4) Il server avvisa tutti quando ha vinto un client e aggiorna la vincita
+	// (VINTO nomeClient)
+	// 5) Il server dichiara la fine della partita (GIOCO OFF)
+
+	public static void main(String[] args) {
+
+		// Apertura server
+		try {
+			// Crei un server di connessione
+			ServerSocket ss = new ServerSocket(9999);
+			while (true) {
+				// riceva una connessione
+				Socket s = ss.accept();
+				// riceva del testo
+				InputStreamReader isr = new InputStreamReader(s.getInputStream());
+				BufferedReader in = new BufferedReader(isr);
+				String comando = in.readLine();
+				if(comando.compareTo("CARTELLA") == 0){
+					// Invio i numeri
+					// TODO Auto-generated method stub
+					System.out.println("entrato");
+					Cartella c = new Cartella();
+					// L'elenco dei numeri da dare al client
+					int numeri[] = c.getNumeri();
+					for (int i : numeri) {
+						System.out.print(i + " ");
+						s.getOutputStream().write(i);
 					}
 				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				if(comando.compareTo("NUMERO") == 0){
+					Cartella c = new Cartella();
+					int numero  = c.getNumeroCasuale();
+					s.getOutputStream().write(numero);
+					
+				}
+				
+				
 			}
-			
-			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-	}
-	
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		/*
-		 * server socket in ascolto
-		 * Per ogni connessione crea un socket e thread
-		 * 	aggiunge ad un vettore di client i client (Quindi in questo caso il clinet sara la scheda di gioco)
-		 * ritorna in ascolto
-		 * 
-		 */
-		ss=new ServerSocket(9999);
-		while(true){
-			socketClient = ss.accept();
-			//aggiunge ad un vettore
-			PrintWriter out = new PrintWriter(socketClient.getOutputStream(),true);
-			clientlist.add(out);
-			//crea socket e passa socket
-			ServerThread st = new ServerThread(socketClient);
-			st.start();
-			//ritorna in ascolto
-		}
+
 		
-		
+
 	}
 
 }
-
-

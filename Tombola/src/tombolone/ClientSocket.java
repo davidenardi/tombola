@@ -10,23 +10,20 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
-
-
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.widgets.Text;
 
 public class ClientSocket {
-	int n =0;
-	protected Shell shlScheda;
-	static Socket client;
-	private Table scheda;
+
+	Socket s;
+
+	protected Shell shell;
+	private Text txtNumero;
 
 	/**
 	 * Launch the application.
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -44,9 +41,9 @@ public class ClientSocket {
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
-		shlScheda.open();
-		shlScheda.layout();
-		while (!shlScheda.isDisposed()) {
+		shell.open();
+		shell.layout();
+		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -57,55 +54,64 @@ public class ClientSocket {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		shlScheda = new Shell();
-		shlScheda.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
-		shlScheda.setSize(450, 276);
-		shlScheda.setText("Scheda");
+		shell = new Shell();
+		shell.setSize(450, 300);
+		shell.setText("SWT Application");
+
+		txtNumero = new Text(shell, SWT.BORDER);
+		txtNumero.setBounds(238, 178, 76, 21);
 		
-		
-		Button btnConnessione = new Button(shlScheda, SWT.NONE);
-		btnConnessione.addSelectionListener(new SelectionAdapter() {
+
+		Button btnNumero = new Button(shell, SWT.NONE);
+		btnNumero.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(n == 0){
+				Socket s;
 				try {
-					n = 1;
-					client = new Socket("localhost",9999);
-					ClientReceiver cs = new ClientReceiver(ClientSocket.this,client);
-					cs.start();
-				} catch (UnknownHostException e1) {
+					s = new Socket("localhost", 9999);
+					PrintWriter out = new PrintWriter(s.getOutputStream());
+					out.print("NUMERO");
+					int numero = s.getInputStream().read();
+					txtNumero.setText(String.valueOf(numero));				
+					} catch (UnknownHostException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				}
-				
 				
 			}
 		});
-		btnConnessione.setBounds(162, 213, 105, 25);
-		btnConnessione.setText("Connessione");
+		btnNumero.setBounds(238, 132, 75, 25);
+		btnNumero.setText("Numero");
 		
-		TableViewer Scheda = new TableViewer(shlScheda, SWT.BORDER | SWT.FULL_SELECTION);
-		scheda = Scheda.getTable();
-		scheda.setBounds(0, 0, 434, 207);
-
-	}
-
-	public void addMessage(String messaggio) {
-		// TODO Auto-generated method stub
-		Display.getDefault().asyncExec(new Runnable(){
-
+		Button btnRecuperaNumeri = new Button(shell, SWT.NONE);
+		btnRecuperaNumeri.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				
+			public void widgetSelected(SelectionEvent e) {
+				// Apre il socket
+				try {
+					Socket s = new Socket("localhost", 9999);
+					PrintWriter out = new PrintWriter(s.getOutputStream());
+					out.print("CARTELLA");
+					for (int i = 0; i < 15; i++) {
+						System.out.print(s.getInputStream().read() + " ");
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				// Riceve i 15 numeri
+				// Apre il thread di comunicazione che riceverà i comandi
+				// successivi
 			}
-			
 		});
+		btnRecuperaNumeri.setBounds(224, 85, 121, 25);
+		btnRecuperaNumeri.setText("Recupera Numeri");
 		
+	
+
 	}
 }
-
