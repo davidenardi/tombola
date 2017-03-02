@@ -13,6 +13,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.swt.layout.FormAttachment;
 
 public class ClientSocket {
 
@@ -20,6 +25,7 @@ public class ClientSocket {
 
 	protected Shell shell;
 	private Text txtNumero;
+	private Table table_1;
 
 	/**
 	 * Launch the application.
@@ -57,9 +63,12 @@ public class ClientSocket {
 		shell = new Shell();
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
+		shell.setLayout(new org.eclipse.swt.layout.FormLayout());
 
 		txtNumero = new Text(shell, SWT.BORDER);
-		txtNumero.setBounds(238, 178, 76, 21);
+		org.eclipse.swt.layout.FormData fd_txtNumero = new org.eclipse.swt.layout.FormData();
+		txtNumero.setLayoutData(fd_txtNumero);
+		
 		
 
 		Button btnNumero = new Button(shell, SWT.NONE);
@@ -83,7 +92,6 @@ public class ClientSocket {
 				
 			}
 		});
-		btnNumero.setBounds(238, 132, 75, 25);
 		btnNumero.setText("Numero");
 		
 		Button btnRecuperaNumeri = new Button(shell, SWT.NONE);
@@ -96,6 +104,7 @@ public class ClientSocket {
 					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 					out.println("CARTELLA");
 					for (int i = 0; i < 15; i++) {
+						
 						System.out.print(s.getInputStream().read() + " ");
 					}
 				} catch (IOException e1) {
@@ -108,10 +117,7 @@ public class ClientSocket {
 				// successivi
 			}
 		});
-		btnRecuperaNumeri.setBounds(224, 85, 121, 25);
 		btnRecuperaNumeri.setText("Recupera Numeri");
-		
-	
 
 	}
 }

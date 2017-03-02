@@ -31,11 +31,9 @@ public class Server {
 				InputStreamReader isr = new InputStreamReader(s.getInputStream());
 				BufferedReader in = new BufferedReader(isr);
 				String comando = in.readLine();
-				System.out.println(comando);
 				if(comando.compareTo("CARTELLA") == 0){
 					// Invio i numeri
 					// TODO Auto-generated method stub
-					System.out.println("entrato");
 					Cartella c = new Cartella();
 					// L'elenco dei numeri da dare al client
 					int numeri[] = c.getNumeri();
