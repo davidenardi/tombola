@@ -69,8 +69,8 @@ public class ClientSocket {
 				Socket s;
 				try {
 					s = new Socket("localhost", 9999);
-					PrintWriter out = new PrintWriter(s.getOutputStream());
-					out.print("NUMERO");
+					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+					out.println("NUMERO");
 					int numero = s.getInputStream().read();
 					txtNumero.setText(String.valueOf(numero));				
 					} catch (UnknownHostException e1) {
@@ -93,8 +93,8 @@ public class ClientSocket {
 				// Apre il socket
 				try {
 					Socket s = new Socket("localhost", 9999);
-					PrintWriter out = new PrintWriter(s.getOutputStream());
-					out.print("CARTELLA");
+					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+					out.println("CARTELLA");
 					for (int i = 0; i < 15; i++) {
 						System.out.print(s.getInputStream().read() + " ");
 					}

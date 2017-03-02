@@ -31,6 +31,7 @@ public class Server {
 				InputStreamReader isr = new InputStreamReader(s.getInputStream());
 				BufferedReader in = new BufferedReader(isr);
 				String comando = in.readLine();
+				System.out.println(comando);
 				if(comando.compareTo("CARTELLA") == 0){
 					// Invio i numeri
 					// TODO Auto-generated method stub
