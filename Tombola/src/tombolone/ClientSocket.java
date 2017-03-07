@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
 
 public class ClientSocket {
 
@@ -66,12 +67,15 @@ public class ClientSocket {
 		shell.setLayout(new org.eclipse.swt.layout.FormLayout());
 
 		txtNumero = new Text(shell, SWT.BORDER);
-		org.eclipse.swt.layout.FormData fd_txtNumero = new org.eclipse.swt.layout.FormData();
+		FormData fd_txtNumero = new FormData();
+		fd_txtNumero.left = new FormAttachment(0, 80);
 		txtNumero.setLayoutData(fd_txtNumero);
 		
 		
 
 		Button btnNumero = new Button(shell, SWT.NONE);
+		FormData fd_btnNumero = new FormData();
+		btnNumero.setLayoutData(fd_btnNumero);
 		btnNumero.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -95,6 +99,13 @@ public class ClientSocket {
 		btnNumero.setText("Numero");
 		
 		Button btnRecuperaNumeri = new Button(shell, SWT.NONE);
+		fd_btnNumero.top = new FormAttachment(btnRecuperaNumeri, 0, SWT.TOP);
+		fd_btnNumero.left = new FormAttachment(btnRecuperaNumeri, 67);
+		fd_txtNumero.top = new FormAttachment(btnRecuperaNumeri, 61);
+		FormData fd_btnRecuperaNumeri = new FormData();
+		fd_btnRecuperaNumeri.top = new FormAttachment(0, 58);
+		fd_btnRecuperaNumeri.left = new FormAttachment(0, 42);
+		btnRecuperaNumeri.setLayoutData(fd_btnRecuperaNumeri);
 		btnRecuperaNumeri.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
