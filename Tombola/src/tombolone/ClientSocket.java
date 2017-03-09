@@ -19,6 +19,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Text;
+
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Composite;
@@ -29,7 +30,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 public class ClientSocket {
-
+	static Socket client;
 	Socket s;
 
 	protected Shell shell;
@@ -81,6 +82,18 @@ public class ClientSocket {
 			}
 		}
 	}
+	
+	
+	
+	public void test() {
+		display.asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
 
 	/**
 	 * Create contents of the window.
@@ -105,7 +118,7 @@ public class ClientSocket {
 		btnNumero.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Socket s;
+				/*Socket s;
 				try {
 					s = new Socket("localhost", 9999);
 					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
@@ -119,8 +132,18 @@ public class ClientSocket {
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				}*/
+				try {
+					client = new Socket("localhost",9999);
+					ClientReceiver cs = new ClientReceiver(ClientSocket.this,client);
+					cs.start();
+				} catch (UnknownHostException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				
 			}
 		});
 		btnNumero.setText("Numero");
@@ -342,7 +365,7 @@ public class ClientSocket {
 					if(String.valueOf(n).compareTo(r3.getText(i)) == 0){
 						System.out.println("trovato");
 						r3.setBackground(i, green);
-					}
+					} 
 				}
 			}
 			

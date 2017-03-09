@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import it.fabiobiscaro.socket.tombola.buddy.Cartella;
@@ -12,6 +13,12 @@ import it.fabiobiscaro.socket.tombola.buddy.Tabellone;
 
 public class Server {
 
+	
+	
+	static ArrayList<PrintWriter> clientlist=new ArrayList<PrintWriter>();
+	
+	
+	
 	// 1) Alla connessione il server dà la lista dei numeri
 	// 1bis) Il gioco comincia, il server avvisa tutti (GIOCO ON)
 	// 2) Il server invia un un numero (NUMERO n)
@@ -63,8 +70,9 @@ public class Server {
 				
 				if(comando.compareTo("NUMERO") == 0){
 					int numero = t.estraiNumero();
-					s.getOutputStream().write(numero);
-					
+					for (PrintWriter printWriter : clientlist) {
+						printWriter.println(Integer.toString(numero));
+					}
 				}
 				
 				
