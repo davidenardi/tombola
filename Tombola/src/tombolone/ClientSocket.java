@@ -17,6 +17,7 @@ import javax.swing.text.TableView.TableRow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.jface.viewers.TableViewer;
@@ -110,7 +111,8 @@ public class ClientSocket {
 					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 					out.println("NUMERO");
 					int numero = s.getInputStream().read();
-					txtNumero.setText(String.valueOf(numero));				
+					txtNumero.setText(String.valueOf(numero));	
+					CercaDentroTabella(numero);
 					} catch (UnknownHostException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -143,6 +145,7 @@ public class ClientSocket {
 						int n = s.getInputStream().read();
 						Numeri.add(n);
 						System.out.print(n + " ");
+						
 					}
 				
 				} catch (IOException e1) {
@@ -154,7 +157,8 @@ public class ClientSocket {
 				// Riceve i 15 numeri
 				// Apre il thread di comunicazione che riceverà i comandi
 				// successivi
-				//InserisciDentroCartella(Numeri);				
+				//InserisciDentroCartella(Numeri);	
+				btnRecuperaNumeri.setEnabled(false);
 			}
 		});
 		btnRecuperaNumeri.setText("Recupera Numeri");
@@ -315,35 +319,33 @@ public class ClientSocket {
 			
 		
 	}
-	
-	public void inserisciTabella(ArrayList a, int c){
-		display.asyncExec(new Runnable() {
-		int cont = 0;
+	public void CercaDentroTabella(int n){
+		Color green = display.getSystemColor(SWT.COLOR_GREEN);
+		Display.getDefault().asyncExec(new Runnable(){
+			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-					for(int i = 0; i < a.size(); i++){
-						cont ++;
-						if(cont ==2){
-							r2.setText(c, String.valueOf(a.get(i)));
-						}
-						if(cont == 3){
-							r3.setText(c,String.valueOf(a.get(i))); 
-						}
-						if(cont == 1){
-							r1.setText(c,String.valueOf(a.get(i)));
-						}
-						
+				for(int i = 0; i < 9; i++){
+					if(String.valueOf(n).compareTo(r1.getText(i)) == 0){
+						System.out.println("trovato");
+						r1.setBackground(i, green);
 					}
 				}
-	
+				for(int i = 0; i < 9; i++){
+					if(String.valueOf(n).compareTo(r2.getText(i)) == 0){
+						System.out.println("trovato");
+						r2.setBackground(i, green);
+					}
+				}
+				for(int i = 0; i < 9; i++){
+					if(String.valueOf(n).compareTo(r3.getText(i)) == 0){
+						System.out.println("trovato");
+						r3.setBackground(i, green);
+					}
+				}
+			}
+			
 		});
-	}
-	public void VisualizzaArray(ArrayList a ){
-		System.out.println(" ");
-		for(int i = 0; i < a.size(); i++){
-			System.out.print(a.get(i) + " ");
 		}
-		System.out.println(" ");
-	}
 }

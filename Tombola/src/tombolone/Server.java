@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.Arrays;
 
 import it.fabiobiscaro.socket.tombola.buddy.Cartella;
+import it.fabiobiscaro.socket.tombola.buddy.Tabellone;
 
 public class Server {
 
@@ -20,7 +21,7 @@ public class Server {
 	// 5) Il server dichiara la fine della partita (GIOCO OFF)
 
 	public static void main(String[] args) {
-
+		Tabellone t = new Tabellone();
 		// Apertura server
 		try {
 			// Crei un server di connessione
@@ -61,8 +62,7 @@ public class Server {
 				}
 				
 				if(comando.compareTo("NUMERO") == 0){
-					Cartella c = new Cartella();
-					int numero  = c.getNumeroCasuale();
+					int numero = t.estraiNumero();
 					s.getOutputStream().write(numero);
 					
 				}
