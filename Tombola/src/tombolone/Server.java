@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 import it.fabiobiscaro.socket.tombola.buddy.Cartella;
 
@@ -37,8 +38,24 @@ public class Server {
 					Cartella c = new Cartella();
 					// L'elenco dei numeri da dare al client
 					int numeri[] = c.getNumeri();
+					Arrays.sort(numeri);
+					// Permuta per ottenere le righe finali (un elemento ogni tre nel vettore ordinato)
+					int tmp = numeri[1];
+					numeri[1] = numeri[3];
+					numeri[3] = numeri[9];
+					numeri[9] = numeri[13];
+					numeri[13] = numeri[11];
+					numeri[11] = numeri[5];
+					numeri[5] = numeri[2];
+					numeri[2] = numeri[6];
+					numeri[6] = numeri[4];
+					numeri[4] = numeri[12];
+					numeri[12] = numeri[8];
+					numeri[8] = numeri[10];
+					numeri[10] = numeri[5];
+					numeri[5] = tmp;
 					for (int i : numeri) {
-						System.out.print(i + " ");
+						//System.out.print(i + " ");
 						s.getOutputStream().write(i);
 					}
 				}

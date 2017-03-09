@@ -140,29 +140,28 @@ public class ClientSocket {
 					
 					out.println("CARTELLA");
 					for (int i = 0; i < 15; i++) {
-						Numeri.add(s.getInputStream().read());
-						System.out.print(s.getInputStream().read() + " ");
+						int n = s.getInputStream().read();
+						Numeri.add(n);
+						System.out.print(n + " ");
 					}
 				
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
+				
+				InserisciDentroCartella(Numeri);
 				// Riceve i 15 numeri
 				// Apre il thread di comunicazione che riceverà i comandi
 				// successivi
-				
-				for (int i = 0; i < 15; i++) {
-					System.out.println(Numeri.get(i) + " ");
-				}
+				//InserisciDentroCartella(Numeri);				
 			}
 		});
 		btnRecuperaNumeri.setText("Recupera Numeri");
 		
 		table = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
 		FormData fd_table = new FormData();
-		fd_table.right = new FormAttachment(txtNumero, 438, SWT.RIGHT);
+		fd_table.right = new FormAttachment(txtNumero, 433, SWT.RIGHT);
 		fd_table.top = new FormAttachment(txtNumero, 0, SWT.TOP);
 		fd_table.left = new FormAttachment(txtNumero, 31);
 		fd_table.bottom = new FormAttachment(0, 97);
@@ -220,53 +219,131 @@ public class ClientSocket {
 	}
 	
 	public void InserisciDentroCartella(ArrayList Numeri){
-		ArrayList a1 = new ArrayList();
-		ArrayList a2 = new ArrayList();
-		ArrayList a3 = new ArrayList();
-		ArrayList a4 = new ArrayList();
-		ArrayList a5 = new ArrayList();
-		ArrayList a6 = new ArrayList();
-		ArrayList a7 = new ArrayList();
-		ArrayList a8 = new ArrayList();
-		
-		display.asyncExec(new Runnable() {
+		for(int i = 0; i < 5 ; i++){
+			int numero = (int) Numeri.get(i);
+			if(numero <= 10){
+				r1.setText(0, String.valueOf(Numeri.get(i)));
+			}else{
+				if(numero >11 && numero <=  20){
+					r1.setText(1, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >20 && numero <=  30){
+					r1.setText(2, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >30 && numero <=  40){
+					r1.setText(3, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >40 && numero <= 50){
+					r1.setText(4, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >50 && numero <= 60){
+					r1.setText(5, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >60 && numero <= 70){
+					r1.setText(6, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >70 && numero <=  80){
+					r1.setText(7, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >80 && numero <=  90){
+					r1.setText(8, String.valueOf(Numeri.get(i)));
+				}
+			}
+		}
+		for(int i = 5; i < 10 ; i++){
+			int numero = (int) Numeri.get(i);
+			if(numero <= 10){
+				r2.setText(0, String.valueOf(Numeri.get(i)));
+			}else{
+				if(numero >11 && numero <=  20){
+					r2.setText(1, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >20 && numero <=  30){
+					r2.setText(2, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >30 && numero <=  40){
+					r2.setText(3, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >40 && numero <= 50){
+					r2.setText(4, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >50 && numero <= 60){
+					r2.setText(5, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >60 && numero <= 70){
+					r2.setText(6, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >70 && numero <=  80){
+					r2.setText(7, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >80 && numero <=  90){
+					r2.setText(8, String.valueOf(Numeri.get(i)));
+				}
+			}
+		}
+		for(int i = 10; i < 15 ; i++){
+			int numero = (int) Numeri.get(i);
+			if(numero <= 10){
+				r3.setText(0, String.valueOf(Numeri.get(i)));
+			}else{
+				if(numero >11 && numero <=  20){
+					r3.setText(1, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >20 && numero <=  30){
+					r3.setText(2, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >30 && numero <=  40){
+					r3.setText(3, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >40 && numero <= 50){
+					r3.setText(4, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >50 && numero <= 60){
+					r3.setText(5, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >60 && numero <= 70){
+					r3.setText(6, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >70 && numero <=  80){
+					r3.setText(7, String.valueOf(Numeri.get(i)));
+				}
+				if(numero >80 && numero <=  90){
+					r3.setText(8, String.valueOf(Numeri.get(i)));
+				}
+			}
+		}
 			
+		
+	}
+	
+	public void inserisciTabella(ArrayList a, int c){
+		display.asyncExec(new Runnable() {
+		int cont = 0;
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				for(int i = 0; i< 15; i++){
-					int numero = (int) Numeri.get(i);
-					if(numero <= 10){
-						a1.add(numero);
-					}else{
-						if(numero >11 && numero <=  20){
-							a2.add(numero);
+					for(int i = 0; i < a.size(); i++){
+						cont ++;
+						if(cont ==2){
+							r2.setText(c, String.valueOf(a.get(i)));
 						}
-						if(numero >20 && numero <=  30){
-							a3.add(numero);
+						if(cont == 3){
+							r3.setText(c,String.valueOf(a.get(i))); 
 						}
-						if(numero >30 && numero <=  50){
-							a4.add(numero);
-						}
-						if(numero >50 && numero <=  60){
-							a5.add(numero);
-						}
-						if(numero >60 && numero <=  70){
-							a6.add(numero);
-						}
-						if(numero >70 && numero <=  80){
-							a7.add(numero);
-						}
-						if(numero >80 && numero <=  90){
-							a8.add(numero);
+						if(cont == 1){
+							r1.setText(c,String.valueOf(a.get(i)));
 						}
 						
 					}
-					
 				}
-				
-				
-			}
+	
 		});
+	}
+	public void VisualizzaArray(ArrayList a ){
+		System.out.println(" ");
+		for(int i = 0; i < a.size(); i++){
+			System.out.print(a.get(i) + " ");
+		}
+		System.out.println(" ");
 	}
 }
