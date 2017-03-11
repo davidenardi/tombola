@@ -70,9 +70,7 @@ public class Server {
 				
 				if(comando.compareTo("NUMERO") == 0){
 					int numero = t.estraiNumero();
-					for (PrintWriter printWriter : clientlist) {
-						printWriter.println(Integer.toString(numero));
-					}
+					s.getOutputStream().write(numero);
 				}
 				
 				

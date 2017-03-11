@@ -118,7 +118,7 @@ public class ClientSocket {
 		btnNumero.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				/*Socket s;
+				Socket s;
 				try {
 					s = new Socket("localhost", 9999);
 					PrintWriter out = new PrintWriter(s.getOutputStream(), true);
@@ -132,19 +132,9 @@ public class ClientSocket {
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}*/
-				try {
-					client = new Socket("localhost",9999);
-					ClientReceiver cs = new ClientReceiver(ClientSocket.this,client);
-					cs.start();
-				} catch (UnknownHostException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
 			}
+				
 		});
 		btnNumero.setText("Numero");
 		
